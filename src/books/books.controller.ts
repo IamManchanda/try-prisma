@@ -15,8 +15,8 @@ export class BooksController {
   constructor(private readonly booksService: BooksService) {}
 
   @Post()
-  create(@Body() booksCreateInput: Prisma.BooksCreateInput) {
-    return this.booksService.create(booksCreateInput);
+  create(@Body() createInput: Prisma.BooksCreateInput) {
+    return this.booksService.create(createInput);
   }
 
   @Get()
@@ -32,13 +32,13 @@ export class BooksController {
   @Patch(":id")
   update(
     @Param("id") id: string,
-    @Body() booksUpdateInput: Prisma.BooksUpdateInput,
+    @Body() updateInput: Prisma.BooksUpdateInput,
   ) {
-    return this.booksService.update({ id: +id }, booksUpdateInput);
+    return this.booksService.update({ id: +id }, updateInput);
   }
 
   @Delete(":id")
   remove(@Param("id") id: string) {
-    return this.booksService.remove(+id);
+    return this.booksService.remove({ id: +id });
   }
 }

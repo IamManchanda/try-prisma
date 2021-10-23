@@ -6,9 +6,9 @@ import { Prisma } from ".prisma/client";
 export class BooksService {
   constructor(private prisma: PrismaService) {}
 
-  create(booksCreateInput: Prisma.BooksCreateInput) {
+  create(createInput: Prisma.BooksCreateInput) {
     return this.prisma.books.create({
-      data: booksCreateInput,
+      data: createInput,
     });
   }
 
@@ -16,23 +16,25 @@ export class BooksService {
     return this.prisma.books.findMany();
   }
 
-  findOne(bookWhereUniqueInput: Prisma.BooksWhereUniqueInput) {
+  findOne(whereUniqueInput: Prisma.BooksWhereUniqueInput) {
     return this.prisma.books.findUnique({
-      where: bookWhereUniqueInput,
+      where: whereUniqueInput,
     });
   }
 
   update(
-    bookWhereUniqueInput: Prisma.BooksWhereUniqueInput,
+    whereUniqueInput: Prisma.BooksWhereUniqueInput,
     booksUpdateInput: Prisma.BooksUpdateInput,
   ) {
     return this.prisma.books.update({
-      where: bookWhereUniqueInput,
+      where: whereUniqueInput,
       data: booksUpdateInput,
     });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} book`;
+  remove(whereUniqueInput: Prisma.BooksWhereUniqueInput) {
+    return this.prisma.books.delete({
+      where: whereUniqueInput,
+    });
   }
 }
