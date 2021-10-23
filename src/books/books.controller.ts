@@ -15,30 +15,35 @@ export class BooksController {
   constructor(private readonly booksService: BooksService) {}
 
   @Post()
-  create(@Body() createInput: Prisma.BooksCreateInput) {
-    return this.booksService.create(createInput);
+  async create(@Body() createInput: Prisma.BooksCreateInput) {
+    const data = await this.booksService.create(createInput);
+    return { success: true, errors: [], data };
   }
 
   @Get()
-  findAll() {
-    return this.booksService.findAll();
+  async findAll() {
+    const data = await this.booksService.findAll();
+    return { success: true, errors: [], data };
   }
 
   @Get(":id")
-  findOne(@Param("id") id: string) {
-    return this.booksService.findOne({ id: +id });
+  async findOne(@Param("id") id: string) {
+    const data = await this.booksService.findOne({ id: +id });
+    return { success: true, errors: [], data };
   }
 
   @Patch(":id")
-  update(
+  async update(
     @Param("id") id: string,
     @Body() updateInput: Prisma.BooksUpdateInput,
   ) {
-    return this.booksService.update({ id: +id }, updateInput);
+    const data = await this.booksService.update({ id: +id }, updateInput);
+    return { success: true, errors: [], data };
   }
 
   @Delete(":id")
-  remove(@Param("id") id: string) {
-    return this.booksService.remove({ id: +id });
+  async remove(@Param("id") id: string) {
+    await this.booksService.remove({ id: +id });
+    return { success: true, errors: [], data: {} };
   }
 }
