@@ -6,9 +6,9 @@ import { Prisma } from ".prisma/client";
 export class BooksService {
   constructor(private prisma: PrismaService) {}
 
-  create(createBookDto: Prisma.BooksCreateInput) {
+  create(booksCreateInput: Prisma.BooksCreateInput) {
     return this.prisma.books.create({
-      data: createBookDto,
+      data: booksCreateInput,
     });
   }
 
@@ -16,11 +16,9 @@ export class BooksService {
     return this.prisma.books.findMany();
   }
 
-  findOne(id: number) {
+  findOne(bookWhereUniqueInput: Prisma.BooksWhereUniqueInput) {
     return this.prisma.books.findUnique({
-      where: {
-        id,
-      },
+      where: bookWhereUniqueInput,
     });
   }
 
