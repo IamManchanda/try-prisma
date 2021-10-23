@@ -22,8 +22,14 @@ export class BooksService {
     });
   }
 
-  update(id: number, updateBookDto: Prisma.BooksUpdateInput) {
-    return `This action updates a #${id} book`;
+  update(
+    bookWhereUniqueInput: Prisma.BooksWhereUniqueInput,
+    booksUpdateInput: Prisma.BooksUpdateInput,
+  ) {
+    return this.prisma.books.update({
+      where: bookWhereUniqueInput,
+      data: booksUpdateInput,
+    });
   }
 
   remove(id: number) {

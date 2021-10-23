@@ -26,9 +26,7 @@ export class BooksController {
 
   @Get(":id")
   findOne(@Param("id") id: string) {
-    return this.booksService.findOne({
-      id: +id,
-    });
+    return this.booksService.findOne({ id: +id });
   }
 
   @Patch(":id")
@@ -36,7 +34,7 @@ export class BooksController {
     @Param("id") id: string,
     @Body() booksUpdateInput: Prisma.BooksUpdateInput,
   ) {
-    return this.booksService.update(+id, booksUpdateInput);
+    return this.booksService.update({ id: +id }, booksUpdateInput);
   }
 
   @Delete(":id")
