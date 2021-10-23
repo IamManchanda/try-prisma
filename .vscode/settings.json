@@ -23,6 +23,7 @@
     ".vscode/settings.json": false,
     ".vscode/tasks.json": false,
     ".vscode/launch.json": false,
-    ".vscode/extensions.json": false
+    ".vscode/extensions.json": false,
+    "**/.env": false
   }
 }
