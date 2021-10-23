@@ -8,15 +8,16 @@ import {
   Delete,
 } from "@nestjs/common";
 import { BooksService } from "./books.service";
-import { Prisma } from ".prisma/client";
+import { CreateBookDto } from "./dto/create-book.dto";
+import { UpdateBookDto } from "./dto/update-book.dto";
 
 @Controller("books")
 export class BooksController {
   constructor(private readonly booksService: BooksService) {}
 
   @Post()
-  async create(@Body() createInput: Prisma.BooksCreateInput) {
-    const data = await this.booksService.create(createInput);
+  async create(@Body() createBookDto: CreateBookDto) {
+    const data = await this.booksService.create(createBookDto);
     return { success: true, errors: [], data };
   }
 
@@ -33,11 +34,8 @@ export class BooksController {
   }
 
   @Patch(":id")
-  async update(
-    @Param("id") id: string,
-    @Body() updateInput: Prisma.BooksUpdateInput,
-  ) {
-    const data = await this.booksService.update({ id: +id }, updateInput);
+  async update(@Param("id") id: string, @Body() updateBookDto: UpdateBookDto) {
+    const data = await this.booksService.update({ id: +id }, updateBookDto);
     return { success: true, errors: [], data };
   }
 
