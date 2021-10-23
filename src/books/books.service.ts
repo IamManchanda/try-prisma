@@ -1,25 +1,30 @@
 import { Injectable } from "@nestjs/common";
-import { CreateBookDto } from "./dto/create-book.dto";
-import { UpdateBookDto } from "./dto/update-book.dto";
 import { PrismaService } from "../prisma.service";
+import { Prisma } from ".prisma/client";
 
 @Injectable()
 export class BooksService {
   constructor(private prisma: PrismaService) {}
 
-  create(createBookDto: CreateBookDto) {
-    return "This action adds a new book";
+  create(createBookDto: Prisma.BooksCreateInput) {
+    return this.prisma.books.create({
+      data: createBookDto,
+    });
   }
 
   findAll() {
-    return `This action returns all books`;
+    return this.prisma.books.findMany();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} book`;
+    return this.prisma.books.findUnique({
+      where: {
+        id,
+      },
+    });
   }
 
-  update(id: number, updateBookDto: UpdateBookDto) {
+  update(id: number, updateBookDto: Prisma.BooksUpdateInput) {
     return `This action updates a #${id} book`;
   }
 
