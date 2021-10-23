@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  ParseIntPipe,
 } from "@nestjs/common";
 import { BooksService } from "./books.service";
 import { CreateBookDto } from "./dto/create-book.dto";
@@ -18,30 +19,33 @@ export class BooksController {
   @Post()
   async create(@Body() createBookDto: CreateBookDto) {
     const data = await this.booksService.create(createBookDto);
-    return { success: true, errors: [], data };
+    return { data: data || {} };
   }
 
   @Get()
   async findAll() {
     const data = await this.booksService.findAll();
-    return { success: true, errors: [], data };
+    return { data: data || {} };
   }
 
   @Get(":id")
-  async findOne(@Param("id") id: string) {
-    const data = await this.booksService.findOne({ id: +id });
-    return { success: true, errors: [], data };
+  async findOne(@Param("id", ParseIntPipe) id: number) {
+    const data = await this.booksService.findOne({ id });
+    return { data: data || {} };
   }
 
   @Patch(":id")
-  async update(@Param("id") id: string, @Body() updateBookDto: UpdateBookDto) {
-    const data = await this.booksService.update({ id: +id }, updateBookDto);
-    return { success: true, errors: [], data };
+  async update(
+    @Param("id", ParseIntPipe) id: number,
+    @Body() updateBookDto: UpdateBookDto,
+  ) {
+    const data = await this.booksService.update({ id }, updateBookDto);
+    return { data: data || {} };
   }
 
   @Delete(":id")
-  async remove(@Param("id") id: string) {
-    await this.booksService.remove({ id: +id });
-    return { success: true, errors: [], data: {} };
+  async remove(@Param("id", ParseIntPipe) id: number) {
+    await this.booksService.remove({ id });
+    return { data: {} };
   }
 }
