@@ -6,34 +6,63 @@ import { Prisma } from ".prisma/client";
 export class BooksService {
   constructor(private prisma: PrismaService) {}
 
-  create(createInput: Prisma.BooksCreateInput) {
-    return this.prisma.books.create({
+  create(createInput: Prisma.BookUncheckedCreateInput) {
+    return this.prisma.book.create({
       data: createInput,
+      include: {
+        author: {
+          select: {
+            name: true,
+          },
+        },
+      },
     });
   }
 
   findAll() {
-    return this.prisma.books.findMany();
+    return this.prisma.book.findMany({
+      include: {
+        author: {
+          select: {
+            name: true,
+          },
+        },
+      },
+    });
   }
 
-  findOne(whereUniqueInput: Prisma.BooksWhereUniqueInput) {
-    return this.prisma.books.findUnique({
+  findOne(whereUniqueInput: Prisma.BookWhereUniqueInput) {
+    return this.prisma.book.findUnique({
       where: whereUniqueInput,
+      include: {
+        author: {
+          select: {
+            name: true,
+          },
+        },
+      },
     });
   }
 
   update(
-    whereUniqueInput: Prisma.BooksWhereUniqueInput,
-    booksUpdateInput: Prisma.BooksUpdateInput,
+    whereUniqueInput: Prisma.BookWhereUniqueInput,
+    updateInput: Prisma.BookUpdateInput,
   ) {
-    return this.prisma.books.update({
+    return this.prisma.book.update({
       where: whereUniqueInput,
-      data: booksUpdateInput,
+      data: updateInput,
+      include: {
+        author: {
+          select: {
+            name: true,
+          },
+        },
+      },
     });
   }
 
-  remove(whereUniqueInput: Prisma.BooksWhereUniqueInput) {
-    return this.prisma.books.delete({
+  remove(whereUniqueInput: Prisma.BookWhereUniqueInput) {
+    return this.prisma.book.delete({
       where: whereUniqueInput,
     });
   }
