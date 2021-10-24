@@ -2,6 +2,12 @@ import { Injectable } from "@nestjs/common";
 import { PrismaService } from "../prisma.service";
 import { Prisma } from ".prisma/client";
 
+const authorsSelection = {
+  select: {
+    name: true,
+  },
+};
+
 @Injectable()
 export class BooksService {
   constructor(private prisma: PrismaService) {}
@@ -9,38 +15,20 @@ export class BooksService {
   create(createInput: Prisma.BookUncheckedCreateInput) {
     return this.prisma.book.create({
       data: createInput,
-      include: {
-        author: {
-          select: {
-            name: true,
-          },
-        },
-      },
+      include: { author: authorsSelection },
     });
   }
 
   findAll() {
     return this.prisma.book.findMany({
-      include: {
-        author: {
-          select: {
-            name: true,
-          },
-        },
-      },
+      include: { author: authorsSelection },
     });
   }
 
   findOne(whereUniqueInput: Prisma.BookWhereUniqueInput) {
     return this.prisma.book.findUnique({
       where: whereUniqueInput,
-      include: {
-        author: {
-          select: {
-            name: true,
-          },
-        },
-      },
+      include: { author: authorsSelection },
     });
   }
 
@@ -51,13 +39,7 @@ export class BooksService {
     return this.prisma.book.update({
       where: whereUniqueInput,
       data: updateInput,
-      include: {
-        author: {
-          select: {
-            name: true,
-          },
-        },
-      },
+      include: { author: authorsSelection },
     });
   }
 

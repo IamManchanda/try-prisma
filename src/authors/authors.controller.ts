@@ -30,7 +30,7 @@ export class AuthorsController {
 
   @Get(":id")
   async findOne(@Param("id", ParseIntPipe) id: number) {
-    const data = await this.authorsService.findOne(id);
+    const data = await this.authorsService.findOne({ id });
     return { data: data || {} };
   }
 
@@ -39,13 +39,13 @@ export class AuthorsController {
     @Param("id", ParseIntPipe) id: number,
     @Body() updateAuthorDto: UpdateAuthorDto,
   ) {
-    const data = await this.authorsService.update(id, updateAuthorDto);
+    const data = await this.authorsService.update({ id }, updateAuthorDto);
     return { data: data || {} };
   }
 
   @Delete(":id")
   async remove(@Param("id", ParseIntPipe) id: number) {
-    await this.authorsService.remove(id);
+    await this.authorsService.remove({ id });
     return { data: {} };
   }
 }
